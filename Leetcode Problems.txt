@@ -1,0 +1,220 @@
+Q1.Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
+You may assume that each input would have exactly one solution, and you may not use the same element twice.
+You can return the answer in any order.
+
+// using brute force approach 
+       class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        
+        int n = nums.length;
+        for(int i=0; i<n; i++)
+        {
+            for(int j=i+1;j<n;j++)
+            {
+               if((nums[i] + nums[j])==target){
+                return new int[]{i, j};
+               }
+            }
+        }
+        return null;
+        }
+
+    
+    }
+
+
+
+// By sing Hahmap
+ Map<Integer, Integer> map = new HashMap<>();
+         
+         for (int i=0; i<nums.length; i++)
+         {
+            int complete = target - nums[i];
+            if (map.containsKey(complete))
+            {
+                return new int[] {map.get(complete),i};
+            }
+            map.put(nums[i],i);
+
+         }
+         throw new  IllegalArgumentException("No two sum solution");
+
+
+
+You are given a large integer represented as an integer array digits, where each digits[i] is the ith digit of the integer. The digits are ordered from most significant to least significant in left-to-right order. The large integer does not contain any leading 0's.
+
+Increment the large integer by one and return the resulting array of digits.
+
+ class Solution {
+    public int[] plusOne(int[] digits) {
+        
+        int n= digits.length;
+        for(int i=n-1; i >= 0; i--)
+        {  
+            
+             if(digits[i] != 9)
+             {
+                digits[i]++;
+                break;
+             }
+             else{
+                digits[i] = 0;
+             }
+             
+
+        }
+        if(digits[0] == 0)
+        {
+            int[] carry= new int[n+1];
+            carry[0] = 1;
+            return carry;
+
+        }
+        return digits;
+        
+    }
+}
+
+Single Number 
+// by using xor at res ^= j;
+class Solution {
+    public int singleNumber(int[] nums) {
+        int n= nums.length;
+        if(n==0)
+        {
+            return n;
+        }
+        int res=0;
+        for(int i=0 ; i<n;i++)
+        {
+            int j= nums[i]; 
+            res ^= j;
+        
+        }
+        return res;
+        
+    }
+}
+
+Given an integer array nums, return true if any value appears at least twice in the array, and return false if every element is distinct.
+
+// time complexity=O(logn);
+  // int n=nums.length;
+        // Arrays.sort(nums);
+        // for (int i = 0; i < n - 1; i++) {
+        //     if (nums[i] == nums[i + 1]) {
+        //         return true;
+        //     }
+        // }
+        // return false;
+
+
+//Time Complexity:O(n)
+         HashSet<Integer> numbers= new HashSet<>();
+
+        for(int i=0 ; i<nums.length;i++)
+        {
+            if(numbers.contains(nums[i]))
+            return true;
+
+            numbers.add(nums[i]);
+        }
+        return false;
+    }
+
+
+Q.Given a sorted array of distinct integers and a target value, return the index if the target is found. If not, return the index where it would be if it were inserted in order.
+
+You must write an algorithm with O(log n) runtime complexity.
+approach : Binary Searc Approach
+
+class Solution {
+    public int searchInsert(int[] nums, int target) {
+        int start=0;
+        int end=nums.length-1;
+
+        while(start<=end)
+        {
+            int mid = (start+end) / 2;
+
+            if(nums[mid]==target)
+            {
+                return mid;
+            }
+            else if(nums[mid]>target)
+            {
+                end = mid-1;
+                
+            }
+            else 
+            {
+                start=mid+1;
+            }
+        }
+        return start;
+
+
+       
+    }
+}
+
+Q.Given an integer array nums and an integer k, return true if there are two distinct indices i and j in the array such that nums[i] == nums[j] and abs(i - j) <= k.
+
+ class Solution {
+    public boolean containsNearbyDuplicate(int[] nums, int k) {
+        Map<Integer, Integer> map = new HashMap<>();  // Correct variable naming
+
+        for (int i = 0; i < nums.length; i++) {  // Correct loop condition
+            if (map.containsKey(nums[i]) && i - map.get(nums[i]) <= k) {  // Remove Math.abs
+                return true;
+            }
+            map.put(nums[i], i);
+        }
+        return false;
+    }
+}
+
+Majority Element
+Approach:Hashmap ,Arrays
+class Solution {
+    public int majorityElement(int[] nums) {
+        int n=nums.length;
+        int MajorityCnt=n/2;
+        Map<Integer,Integer> counts = new HashMap<>();
+
+        for(int i=0;i<n;i++)
+        {
+            int num=nums[i];
+            int count = counts.getOrDefault(num, 0) + 1;
+            if(count>MajorityCnt)
+            {
+                return num;
+            }
+            counts.put(num , count);
+        }
+        return -1;
+        
+    }
+}
+
+//No of Seniour citizen Problem
+class Solution {
+    public int countSeniors(String[] details) {
+        int greaterThan60 =0;
+
+        for(String Detail : details)
+        {
+            int ageOnes = Detail.charAt(11) - '0';
+            int agetens = Detail.charAt(12) - '0';
+
+            int age  = ageOnes *10 + agetens;
+            if(age > 60)
+            {
+                greaterThan60++;
+            }
+
+        }
+        return greaterThan60;
+        
+    }
+}
